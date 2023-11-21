@@ -79,17 +79,18 @@ export default class WrappedCreator {
 
       debug("Loading consumer_order_details.csv");
       let csvContent = "";
-      if (zip.files["consumer_order_details.csv"]) {
-        csvContent = await zip.files["consumer_order_details.csv"].async(
-          "string"
-        );
+      const fileName = Object.keys(zip.files).find((fileName) =>
+        fileName.includes("consumer_order_details.csv")
+      );
+      if (fileName && zip.files[fileName]) {
+        csvContent = await zip.files[fileName].async("string");
       } else {
         debug(
           "consumer_order_details.csv not found in the ZIP file.",
           zip.files
         );
         trackEvent("no_consumer_order_details_csv");
-        trackEvent("zip:" + Object.keys(zip.files).join(","));
+        trackEvent("zip:" + fileName);
         throw new Error(
           "consumer_order_details.csv not found in the ZIP file."
         );
