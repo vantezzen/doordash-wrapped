@@ -4,6 +4,7 @@ import * as Sentry from "@sentry/nextjs";
 import debugging from "debug";
 import { parse as parseCsv } from "papaparse";
 import { Order, OrderDetails, OrdersSchema } from "./types";
+import { trackEvent } from "./analytics";
 const debug = debugging("WrappedCreator");
 
 export default class WrappedCreator {
@@ -87,6 +88,8 @@ export default class WrappedCreator {
           "consumer_order_details.csv not found in the ZIP file.",
           zip.files
         );
+        trackEvent("no_consumer_order_details_csv");
+        trackEvent("zip:" + Object.keys(zip.files).join(","));
         throw new Error(
           "consumer_order_details.csv not found in the ZIP file."
         );
