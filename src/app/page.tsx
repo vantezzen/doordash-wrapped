@@ -264,18 +264,20 @@ function TikTokWrappedAppPage() {
         />
       )}
 
-      {page === "play" && wrapped?.demoMode && (
-        <div className="fixed bottom-12 left-12 right-12 z-0 opacity-60 text-zinc-500 break-words">
-          <h2 className="text-2xl md:text-4xl font-bold">Demo Mode</h2>
-          <p className="text-sm">
-            This is a demo of Wrapped for Doordash. It does not use your real
-            Doordash data.
-            <br />
-            To see your own Wrapped, reload the page and upload your Doordash
-            data.
-          </p>
-        </div>
-      )}
+      {page === "play" &&
+        wrapped?.demoMode &&
+        !localStorage.getItem("sneaky-demo") && (
+          <div className="fixed bottom-12 left-12 right-12 z-0 opacity-60 text-zinc-500 break-words">
+            <h2 className="text-2xl md:text-4xl font-bold">Demo Mode</h2>
+            <p className="text-sm">
+              This is a demo of Wrapped for Doordash. It does not use your real
+              Doordash data.
+              <br />
+              To see your own Wrapped, reload the page and upload your Doordash
+              data.
+            </p>
+          </div>
+        )}
     </div>
   );
 }
